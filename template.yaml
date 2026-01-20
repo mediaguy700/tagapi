@@ -38,6 +38,8 @@ Resources:
           Properties:
             Path: /items
             Method: post
+            Auth:
+              ApiKeyRequired: true
 
   GetItemFunction:
     Type: AWS::Serverless::Function
@@ -53,6 +55,8 @@ Resources:
           Properties:
             Path: /items/{id}
             Method: get
+            Auth:
+              ApiKeyRequired: true
 
   UpdateItemFunction:
     Type: AWS::Serverless::Function
@@ -68,6 +72,8 @@ Resources:
           Properties:
             Path: /items/{id}
             Method: put
+            Auth:
+              ApiKeyRequired: true
 
   DeleteItemFunction:
     Type: AWS::Serverless::Function
@@ -83,6 +89,8 @@ Resources:
           Properties:
             Path: /items/{id}
             Method: delete
+            Auth:
+              ApiKeyRequired: true
 
   ListItemsFunction:
     Type: AWS::Serverless::Function
@@ -98,6 +106,40 @@ Resources:
           Properties:
             Path: /items
             Method: get
+            Auth:
+              ApiKeyRequired: true
+
+  # API Key for securing the API
+  TagApiApiKey:
+    Type: AWS::ApiGateway::ApiKey
+    Properties:
+      Name: tagapi-key
+      Description: API Key for TagAPI access
+      Enabled: true
+
+  # Usage Plan with throttling and rate limiting
+  TagApiUsagePlan:
+    Type: AWS::ApiGateway::UsagePlan
+    Properties:
+      UsagePlanName: tagapi-usage-plan
+      Description: Usage plan for TagAPI with throttling
+      ApiStages:
+        - ApiId: !Ref ServerlessRestApi
+          Stage: Prod
+      Throttle:
+        BurstLimit: 10
+        RateLimit: 5
+      Quota:
+        Limit: 10000
+        Period: MONTH
+
+  # Associate API Key with Usage Plan
+  TagApiUsagePlanKey:
+    Type: AWS::ApiGateway::UsagePlanKey
+    Properties:
+      KeyId: !Ref TagApiApiKey
+      KeyType: API_KEY
+      UsagePlanId: !Ref TagApiUsagePlan
 
 Outputs:
   ApiUrl:
@@ -106,3 +148,6 @@ Outputs:
   TagalongTableName:
     Description: "DynamoDB Table Name"
     Value: !Ref TagalongTable
+  ApiKeyId:
+    Description: "API Key ID - Use 'aws apigateway get-api-key --api-key <ID> --include-value' to retrieve the key value"
+    Value: !Ref TagApiApiKey

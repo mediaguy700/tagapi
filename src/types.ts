@@ -12,8 +12,7 @@ export interface Item {
 export interface ApiResponse {
   statusCode: number;
   headers: {
-    'Content-Type': string;
-    'Access-Control-Allow-Origin': string;
+    [key: string]: string;
   };
   body: string;
 }

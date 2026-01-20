@@ -5,13 +5,24 @@ export const createResponse = (
   body: any,
   headers: Record<string, string> = {}
 ): ApiResponse => {
+  const responseHeaders: Record<string, string> = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, X-API-Key',
+    ...headers,
+  };
+  
+  // Remove undefined values
+  Object.keys(responseHeaders).forEach(key => {
+    if (responseHeaders[key] === undefined) {
+      delete responseHeaders[key];
+    }
+  });
+
   return {
     statusCode,
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      ...headers,
-    },
+    headers: responseHeaders,
     body: JSON.stringify(body),
   };
 };

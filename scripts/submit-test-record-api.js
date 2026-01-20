@@ -13,12 +13,15 @@ const testRecord = {
 
 const postData = JSON.stringify(testRecord);
 
+const API_KEY = process.env.API_KEY || '2GQCAw8pQV9eqaaKy3aY58TSOHQndXGk69MBToxk';
+
 const options = {
   hostname: 'dxpsn25dt0.execute-api.us-east-2.amazonaws.com',
   path: '/Prod/items',
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
+    'x-api-key': API_KEY,
     'Content-Length': Buffer.byteLength(postData)
   }
 };
