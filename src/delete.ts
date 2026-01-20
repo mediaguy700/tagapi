@@ -7,17 +7,17 @@ export const handler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   try {
-    const beaconid = event.pathParameters?.beaconid;
+    const id = event.pathParameters?.id;
 
-    if (!beaconid) {
-      return errorResponse(400, 'Beacon ID is required');
+    if (!id) {
+      return errorResponse(400, 'ID is required');
     }
 
     // First check if item exists
     const getResult = await dynamoClient.send(
       new GetCommand({
         TableName: TABLE_NAME,
-        Key: { beaconid },
+        Key: { id },
       })
     );
 
@@ -28,13 +28,13 @@ export const handler = async (
     await dynamoClient.send(
       new DeleteCommand({
         TableName: TABLE_NAME,
-        Key: { beaconid },
+        Key: { id },
       })
     );
 
     return successResponse({
       message: 'Item deleted successfully',
-      beaconid,
+      id,
     });
   } catch (error) {
     console.error('Error deleting item:', error);

@@ -1,11 +1,11 @@
 export interface Item {
-  beaconid: string;
+  id: string;
   name: string;
-  description?: string;
   lat?: string; // Latitude as string
-  long?: string; // Longitude as string
-  createdAt?: string;
-  updatedAt?: string;
+  lng?: string; // Longitude as string
+  floor?: string;
+  timestamp?: string;
+  Status?: string;
   [key: string]: any; // Allow additional fields
 }
 

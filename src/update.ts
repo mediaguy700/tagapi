@@ -7,10 +7,10 @@ export const handler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   try {
-    const beaconid = event.pathParameters?.beaconid;
+    const id = event.pathParameters?.id;
 
-    if (!beaconid) {
-      return errorResponse(400, 'Beacon ID is required');
+    if (!id) {
+      return errorResponse(400, 'ID is required');
     }
 
     if (!event.body) {
@@ -18,7 +18,7 @@ export const handler = async (
     }
 
     const body = JSON.parse(event.body);
-    const { beaconid: bodyBeaconId, createdAt, ...updateFields } = body;
+    const { id: bodyId, ...updateFields } = body;
 
     // Remove undefined values
     const updateExpressionParts: string[] = [];
@@ -35,10 +35,12 @@ export const handler = async (
       }
     });
 
-    // Always update the updatedAt timestamp
-    updateExpressionParts.push(`#updatedAt = :updatedAt`);
-    expressionAttributeNames['#updatedAt'] = 'updatedAt';
-    expressionAttributeValues[':updatedAt'] = new Date().toISOString();
+    // Always update the timestamp if not provided
+    if (!updateFields.timestamp) {
+      updateExpressionParts.push(`#timestamp = :timestamp`);
+      expressionAttributeNames['#timestamp'] = 'timestamp';
+      expressionAttributeValues[':timestamp'] = new Date().toISOString();
+    }
 
     if (updateExpressionParts.length === 0) {
       return errorResponse(400, 'No fields to update');
@@ -49,7 +51,7 @@ export const handler = async (
     const result = await dynamoClient.send(
       new UpdateCommand({
         TableName: TABLE_NAME,
-        Key: { beaconid },
+        Key: { id },
         UpdateExpression: updateExpression,
         ExpressionAttributeNames: expressionAttributeNames,
         ExpressionAttributeValues: expressionAttributeValues,

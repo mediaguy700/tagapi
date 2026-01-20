@@ -13,23 +13,23 @@ export const handler = async (
     }
 
     const body = JSON.parse(event.body);
-    const { name, description, lat, long, ...otherFields } = body;
+    const { name, lat, lng, floor, timestamp, Status, ...otherFields } = body;
 
     if (!name) {
       return errorResponse(400, 'Name is required');
     }
 
-    const beaconid = body.beaconid || `beacon-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const id = body.id || `id-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     const now = new Date().toISOString();
 
     const item: Item = {
-      beaconid,
+      id,
       name,
-      description: description || '',
       lat: lat || undefined,
-      long: long || undefined,
-      createdAt: now,
-      updatedAt: now,
+      lng: lng || undefined,
+      floor: floor || undefined,
+      timestamp: timestamp || now,
+      Status: Status || undefined,
       ...otherFields,
     };
 
