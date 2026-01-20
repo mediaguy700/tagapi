@@ -13,7 +13,7 @@ export const handler = async (
     }
 
     const body = JSON.parse(event.body);
-    const { name, description, ...otherFields } = body;
+    const { name, description, lat, long, ...otherFields } = body;
 
     if (!name) {
       return errorResponse(400, 'Name is required');
@@ -26,6 +26,8 @@ export const handler = async (
       beaconid,
       name,
       description: description || '',
+      lat: lat || undefined,
+      long: long || undefined,
       createdAt: now,
       updatedAt: now,
       ...otherFields,
