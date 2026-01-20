@@ -10,12 +10,14 @@ async function insertTestRecord() {
   try {
     const testRecord = {
       beaconid: `beacon-test-${Date.now()}`,
-      name: 'Test Beacon',
-      description: 'This is a test record inserted via script',
+      name: 'Test Beacon with Location',
+      description: 'This is a test record with latitude and longitude',
+      lat: '40.7128',
+      long: '-74.0060',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       status: 'active',
-      location: 'Test Location',
+      location: 'New York City',
     };
 
     console.log('Inserting test record...');
