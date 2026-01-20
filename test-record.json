@@ -1,0 +1,23 @@
+{
+  "beaconid": {
+    "S": "beacon-test-12345"
+  },
+  "name": {
+    "S": "Test Beacon"
+  },
+  "description": {
+    "S": "This is a test record"
+  },
+  "createdAt": {
+    "S": "2024-01-15T10:30:00Z"
+  },
+  "updatedAt": {
+    "S": "2024-01-15T10:30:00Z"
+  },
+  "status": {
+    "S": "active"
+  },
+  "location": {
+    "S": "Test Location"
+  }
+}

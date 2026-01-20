@@ -1,0 +1,93 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AWS API with DynamoDB CRUD operations
+
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: nodejs20.x
+    MemorySize: 256
+    Environment:
+      Variables:
+        TABLE_NAME: !Ref TagalongTable
+
+Resources:
+  TagalongTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: tagalong
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: beaconid
+          AttributeType: S
+      KeySchema:
+        - AttributeName: beaconid
+          KeyType: HASH
+
+  CreateItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/create.handler
+      CodeUri: .
+      Events:
+        CreateItem:
+          Type: Api
+          Properties:
+            Path: /items
+            Method: post
+
+  GetItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/get.handler
+      CodeUri: .
+      Events:
+        GetItem:
+          Type: Api
+          Properties:
+            Path: /items/{beaconid}
+            Method: get
+
+  UpdateItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/update.handler
+      CodeUri: .
+      Events:
+        UpdateItem:
+          Type: Api
+          Properties:
+            Path: /items/{beaconid}
+            Method: put
+
+  DeleteItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/delete.handler
+      CodeUri: .
+      Events:
+        DeleteItem:
+          Type: Api
+          Properties:
+            Path: /items/{beaconid}
+            Method: delete
+
+  ListItemsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/list.handler
+      CodeUri: .
+      Events:
+        ListItems:
+          Type: Api
+          Properties:
+            Path: /items
+            Method: get
+
+Outputs:
+  ApiUrl:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  TagalongTableName:
+    Description: "DynamoDB Table Name"
+    Value: !Ref TagalongTable

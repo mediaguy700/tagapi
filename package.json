@@ -1,0 +1,31 @@
+{
+  "name": "tagapi-dynamodb-crud",
+  "version": "1.0.0",
+  "description": "AWS API with DynamoDB CRUD operations",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sam-build": "sam build",
+    "sam-deploy": "sam deploy --guided",
+    "insert-test": "node scripts/insert-test-record.js"
+  },
+  "keywords": [
+    "aws",
+    "dynamodb",
+    "lambda",
+    "api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.490.0",
+    "@aws-sdk/lib-dynamodb": "^3.490.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.130",
+    "@types/node": "^20.10.6",
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.2"
+  }
+}

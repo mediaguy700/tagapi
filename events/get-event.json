@@ -1,0 +1,7 @@
+{
+  "httpMethod": "GET",
+  "path": "/items/beacon-123",
+  "pathParameters": {
+    "beaconid": "beacon-123"
+  }
+}
