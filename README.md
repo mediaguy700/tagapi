@@ -39,6 +39,8 @@ This project provides a complete AWS API implementation with CRUD (Create, Read,
   {
     "name": "Item Name",
     "description": "Item description",
+    "lat": "40.7128",  // Latitude as string (optional)
+    "long": "-74.0060", // Longitude as string (optional)
     "beaconid": "optional-custom-beaconid" // Auto-generated if not provided
   }
   ```
@@ -55,7 +57,9 @@ This project provides a complete AWS API implementation with CRUD (Create, Read,
   ```json
   {
     "name": "Updated Name",
-    "description": "Updated description"
+    "description": "Updated description",
+    "lat": "40.7128",  // Latitude as string (optional)
+    "long": "-74.0060" // Longitude as string (optional)
   }
   ```
 
@@ -130,7 +134,7 @@ After deployment, you can test the API using curl or any HTTP client:
 ```bash
 curl -X POST https://YOUR_API_URL/items \
   -H "Content-Type: application/json" \
-  -d '{"name": "Test Item", "description": "This is a test"}'
+  -d '{"name": "Test Item", "description": "This is a test", "lat": "40.7128", "long": "-74.0060"}'
 ```
 
 ### Get an item:
