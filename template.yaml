@@ -10,6 +10,12 @@ Globals:
     Environment:
       Variables:
         TABLE_NAME: !Ref TagalongTable
+  Api:
+    Cors:
+      AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
+      AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,x-api-key'"
+      AllowOrigin: "'*'"
+      MaxAge: "'3600'"
 
 Resources:
   TagalongTable:
