@@ -1,6 +1,6 @@
 const https = require('https');
 
-const API_URL = 'https://fg559se7ok.execute-api.us-east-1.amazonaws.com/Prod/items';
+const API_URL = 'https://dxpsn25dt0.execute-api.us-east-2.amazonaws.com/Prod/items';
 
 const testRecord = {
   name: 'Test Beacon with Location',
@@ -14,7 +14,7 @@ const testRecord = {
 const postData = JSON.stringify(testRecord);
 
 const options = {
-  hostname: 'fg559se7ok.execute-api.us-east-1.amazonaws.com',
+  hostname: 'dxpsn25dt0.execute-api.us-east-2.amazonaws.com',
   path: '/Prod/items',
   method: 'POST',
   headers: {
