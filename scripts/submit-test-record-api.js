@@ -4,11 +4,11 @@ const API_URL = 'https://fg559se7ok.execute-api.us-east-1.amazonaws.com/Prod/ite
 
 const testRecord = {
   name: 'Test Beacon with Location',
-  description: 'Test record submitted via API with latitude and longitude',
   lat: '40.7128',
-  long: '-74.0060',
-  status: 'active',
-  location: 'New York City'
+  lng: '-74.0060',
+  floor: '1',
+  timestamp: new Date().toISOString(),
+  Status: 'active'
 };
 
 const postData = JSON.stringify(testRecord);
@@ -38,12 +38,12 @@ const req = https.request(options, (res) => {
     console.log(`Status Code: ${res.statusCode}`);
     console.log('Response:', data);
     
-    if (res.statusCode === 200) {
+    if (res.statusCode === 200 || res.statusCode === 201) {
       try {
         const response = JSON.parse(data);
         console.log('\n✅ Test record submitted successfully!');
         if (response.item) {
-          console.log(`Beacon ID: ${response.item.beaconid}`);
+          console.log(`ID: ${response.item.id}`);
         }
       } catch (e) {
         console.log('\n✅ Test record submitted successfully!');
